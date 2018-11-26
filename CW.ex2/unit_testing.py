@@ -1,0 +1,121 @@
+import unittest
+from GraphClass import *
+
+class Unit_Testing(unittest.TestCase):
+	def test_graph(self):
+		a = Graph(6)
+		a.add_vertice(1)
+		a.add_vertice(2)
+		a.add_vertice(3)
+		a.add_vertice(4)
+		a.add_vertice(5)
+		a.add_vertice(6)
+		self.assertEqual(a.vertice,6)
+		a.add_connections(1, [2])
+		a.add_connections(2, [3])
+		a.add_connections(3, [4])
+		a.add_connections(4,[5])
+		a.add_connections(5,[6])
+		a.add_connections(6,[])
+		graph = { 1: [2] , 2: [1,3] , 3:[2,4], 4:[3,5] , 5: [4,6], 6: [5]}
+		self.assertEqual(a.connections, graph)
+
+	def test_inVertice(self):
+		a = Graph(6)
+		a.add_vertice(1)
+		a.add_vertice(2)
+		a.add_vertice(3)
+		a.add_vertice(4)
+		a.add_vertice(5)
+		a.add_vertice(6)
+		a.add_connections(1, [2])
+		a.add_connections(2, [3])
+		a.add_connections(3, [4])
+		a.add_connections(4,[5])
+		a.add_connections(5,[6])
+		a.add_connections(6,[])
+		result = a.isInVertice(2,3)
+		self.assertTrue(result)
+
+	def test_weights(self):
+		a = Graph(6)
+		a.add_vertice(1)
+		a.add_vertice(2)
+		a.add_vertice(3)
+		a.add_vertice(4)
+		a.add_vertice(5)
+		a.add_vertice(6)
+		a.add_connections(1, [2])
+		a.add_connections(2, [3])
+		a.add_connections(3, [4])
+		a.add_connections(4,[5])
+		a.add_connections(5,[6])
+		a.add_connections(6,[])
+		a.add_weight(1,2,20)
+		self.assertEqual(a.weights[1,2],20)
+		self.assertTrue(a.add_weight(1,2,20))
+
+
+	def test_isConnected(self):
+		a = Graph(6)
+		a.add_vertice(1)
+		a.add_vertice(2)
+		a.add_vertice(3)
+		a.add_vertice(4)
+		a.add_vertice(5)
+		a.add_vertice(6)
+		a.add_connections(1, [2])
+		a.add_connections(2, [3])
+		a.add_connections(3, [4])
+		a.add_connections(4,[5])
+		a.add_connections(5,[6])
+		a.add_connections(6,[])
+		resulta = a.isConnectedBFS()
+		resultb = a.isConnectedDFS()
+		self.assertTrue(resulta)
+		self.assertTrue(resultb)
+
+	def test_isConnected(self):
+		a = Graph(6)
+		a.add_vertice(1)
+		a.add_vertice(2)
+		a.add_vertice(3)
+		a.add_vertice(4)
+		a.add_vertice(5)
+		a.add_vertice(6)
+		a.add_connections(1, [2])
+		a.add_connections(2, [3])
+		a.add_connections(3, [4])
+		a.add_connections(4,[5])
+		a.add_connections(5,[6])
+		a.add_connections(6,[])
+		result = a.isPath(1,6)
+		self.assertTrue(result)
+
+	def test_djikstra(self):
+		a = Graph(6)
+
+		a.add_vertice(1)
+		a.add_vertice(2)
+		a.add_vertice(3)
+		a.add_vertice(4)
+		a.add_vertice(5)
+		a.add_vertice(6)
+
+		a.add_connections(1, [2])
+		a.add_connections(2, [3])
+		a.add_connections(3, [4])
+		a.add_connections(4,[5])
+		a.add_connections(5,[6])
+		a.add_connections(6,[1])
+
+
+		a.add_weight(1,2,20)
+		a.add_weight(2,3,3)
+		a.add_weight(3,4,15)
+		a.add_weight(4,5,10)
+		a.add_weight(5,6,11)
+		a.add_weight(6,1,19)
+
+		result = [2,3]
+		self.assertEqual(a.dijsktra(1,3),result)
